@@ -7,6 +7,8 @@ class DownloaderPy():
     # Urls List
     urls = []
 
+    overrideExtension = None
+
     def setUrl(self, url):
         self.urls.append(url)
 
@@ -61,12 +63,20 @@ class DownloaderPy():
 
         return Report(successfullAttempts, failedAttempts)
 
+    def extension(self, extension):
+        self.overrideExtension = extension
+
+        return self
+
     def get_file_name(self, url):
         # Divide string by / symbol
         segments = url.split('/')
 
         # Get latest item to catch filename with its extension
         last_segment = segments[-1]
+
+        if(self.overrideExtension != None):
+            return last_segment + "." + self.overrideExtension
 
         # Return
         return last_segment
